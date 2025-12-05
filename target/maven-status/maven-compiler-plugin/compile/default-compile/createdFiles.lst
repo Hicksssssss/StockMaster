@@ -1,0 +1,14 @@
+com\stockmaster\entity\Product.class
+com\stockmaster\entity\Customer.class
+module-info.class
+com\stockmaster\DashboardController.class
+com\stockmaster\Application.class
+com\stockmaster\config\Database.class
+com\stockmaster\LoginController.class
+com\stockmaster\entity\Billing.class
+com\stockmaster\entity\Sales.class
+com\stockmaster\app\Launcher.class
+com\stockmaster\entity\Invoice.class
+com\stockmaster\entity\Purchase.class
+com\stockmaster\entity\User.class
+com\stockmaster\BillsController.class
