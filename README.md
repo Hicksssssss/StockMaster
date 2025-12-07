@@ -1,6 +1,6 @@
 # StockMaster - Gestionnaire de stock
 
-Gestionnaire de stock complet développé en **JavaFX + MySQL + JasperReports**.
+Gestionnaire de stock complet développé en **JavaFX + MySQL .
 
 ## Fonctionnalités
 - Authentification (login)
@@ -16,10 +16,7 @@ Gestionnaire de stock complet développé en **JavaFX + MySQL + JasperReports**.
 - JavaFX
 - MySQL
 - Maven
-- JasperReports pour les rapports
 
-## Captures d'écran
-*(tu peux en rajouter plus tard)*
 
 ## Lancement
 cmd : 
