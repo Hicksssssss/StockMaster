@@ -1,5 +1,6 @@
 package com.stockmaster;
 
+import javafx.application.Platform;
 import com.stockmaster.entity.*;
 import com.stockmaster.config.Database;
 import javafx.collections.FXCollections;
@@ -331,14 +332,15 @@ public class DashboardController implements Initializable {
 
     }
 
-    public void setUsername(){
+    public void setUsername() {
         if (User.name != null && !User.name.isEmpty()) {
             user.setText(User.name.toUpperCase());
         } else {
-            user.setText("ADMIN");  // Texte temporaire, on remplacera par rôle dynamique après login
+            // On attend que tout soit chargé avant de rediriger
+            Platform.runLater(() -> signOut());
         }
     }
-
+    
     public void activateDashboard(){
         dasboard_pane.setVisible(true);
         billing_pane.setVisible(false);
@@ -1186,33 +1188,36 @@ public class DashboardController implements Initializable {
      getSalesDetailsOfThisMonth();
      getItemSoldThisMonth();
     }
-    public void signOut(){
-        signout_btn.getScene().getWindow().hide();
-        try{
-        Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage=new Stage();
-            root.setOnMousePressed((event)->{
-                x=event.getSceneX();
-                y=event.getSceneY();
-            });
-            root.setOnMouseDragged((event)->{
-                stage.setX(event.getScreenX()-x);
-                stage.setY(event.getScreenY()-y);
-            });
 
+    public void signOut() {
+        Stage currentStage = (Stage) dasboard_pane.getScene().getWindow();
+        currentStage.hide();
+
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            
+            root.setOnMousePressed(event -> {
+                x = event.getSceneX();
+                y = event.getSceneY();
+            });
+            root.setOnMouseDragged(event -> {
+                stage.setX(event.getScreenX() - x);
+                stage.setY(event.getScreenY() - y);
+            });
+            
             stage.initStyle(StageStyle.TRANSPARENT);
             stage.setScene(scene);
             stage.show();
-        }catch (Exception err){
+        } catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeight(500);
-            alert.setTitle("Error Message");
+            alert.setTitle("Erreur");
             alert.setHeaderText(null);
-            alert.setContentText(err.getMessage());
+            alert.setContentText("Impossible de charger l'écran de connexion : " + e.getMessage());
             alert.showAndWait();
         }
-
     }
 
     @Override
